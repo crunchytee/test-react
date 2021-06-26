@@ -16,5 +16,9 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crunchytee/learning-react.git"
   }
 }
