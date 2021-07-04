@@ -3,18 +3,15 @@ import React, { useState } from 'react';
 // Simple header component
 // built 7/1/21
 
-const SimpleHeader = (props) => {
+const TestMap = (props) => {
     const [listItems, setListItems] = useState(props.lists);
-    // setListItems(props.lists);
     return (
         <div id="header">
-            <h1 id="title">{String(props.title)}</h1>
-            <h2 id="subtitle">{String(props.subtitle)}</h2>
             {
                 listItems.map(
                     (listItem) => {
                         return (
-                            <a href={"#" + listItem} key={listItem}>{String(listItem)}</a>
+                            <h1 key={listItem.id}>{listItem}</h1>
                         )
                         
                     }
@@ -24,4 +21,4 @@ const SimpleHeader = (props) => {
     )
 }
 
-export default SimpleHeader;
+export default TestMap;
