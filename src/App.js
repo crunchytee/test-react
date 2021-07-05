@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { render } from "react-dom";
 import SimpleHeader from "./SimpleHeader";
 import NewNote from "./NewNote";
+import editNote from "./EditNote";
 
 const App = () => {
 
@@ -18,17 +19,17 @@ const App = () => {
       {
         //Render NewNote && pass the notes state and setter function to NewNote
       }
-      <NewNote notes={notes} setNotes={setNotes} />
+      <NewNote className="newNote" notes={notes} setNotes={setNotes} />
     
       {
         //Map over the notes and render each of them
       }
       {
         notes.map((note, i) => (
-          <div key={i}>
-            <div>{note.noteTitle}</div>
-            <div>{note.noteDate}</div>
-            <div>{note.noteContent}</div>
+          <div className="note" key={i} onClick={editNote(note)}>
+            <h1 className="noteTitle">{note.noteTitle}</h1>
+            <h3 className="noteDate">{note.noteDate}</h3>
+            <div className="noteContent">{note.noteContent}</div>
           </div>  
         ))
       }

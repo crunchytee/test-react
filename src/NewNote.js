@@ -26,16 +26,16 @@ const NewNote = (props) => {
     
     //Render NewNote form
     return (
-        <div className="note" onSubmit={onSubmit}>
+        <div className="newNote" onSubmit={onSubmit}>
             <form> 
                 <label htmlFor="noteTitle">Note Title</label>
-                <input type="text" id="noteTitle" name="noteTitle" required />
+                <input type="text" id="noteTitle" name="noteTitle" value={props.noteTitle} required />
 
                 <label htmlFor="noteDate">Note Date</label>
-                <input type="date" id="noteDate" name="noteDate" required />
+                <input type="date" id="noteDate" name="noteDate" value={props.noteDate} required />
 
                 <label htmlFor="noteContent">Note Content</label>
-                <input type="text" id="noteContent" name="noteContent" required />
+                <input type="text" id="noteContent" name="noteContent" value={props.noteContent} required />
 
                 <button type="submit">Submit Note</button>
             </form>

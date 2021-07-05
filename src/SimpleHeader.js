@@ -4,12 +4,18 @@ import React, { useState } from 'react';
 // built 7/1/21
 
 const SimpleHeader = (props) => {
+    //Add state for the list items
     const [listItems, setListItems] = useState(props.lists);
-    // setListItems(props.lists);
+
+    //Render header
     return (
         <div id="header">
             <h1 id="title">{String(props.title)}</h1>
             <h2 id="subtitle">{String(props.subtitle)}</h2>
+
+            {
+                //Map through passed listeItems and render them next to eachother
+            }
             {
                 listItems.map(
                     (listItem) => {
