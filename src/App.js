@@ -3,11 +3,13 @@ import { render } from "react-dom";
 import SimpleHeader from "./SimpleHeader";
 import NewNote from "./NewNote";
 import editNote from "./EditNote";
+import loadNotes from "./loadNotes";
 
 const App = () => {
 
   //State used to store notes
   const [notes, setNotes] = useState([]);
+  loadNotes();
 
   //Return statement: includes SimpleHeader and Notes
   return (
@@ -26,10 +28,11 @@ const App = () => {
       }
       {
         notes.map((note, i) => (
-          <div className="note" key={i} onClick={editNote(note)}>
+          <div className="note" key={i}>
             <h1 className="noteTitle">{note.noteTitle}</h1>
             <h3 className="noteDate">{note.noteDate}</h3>
             <div className="noteContent">{note.noteContent}</div>
+            <div className="noteContent">{note.noteId}</div>
           </div>  
         ))
       }
