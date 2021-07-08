@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "dev": "parcel src/index.html"
