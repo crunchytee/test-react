@@ -1,16 +1,17 @@
 import React, { useState } from "react";
+import idGenerator from "./idGenerator";
 
-// Simple Note component
+// Simple NewNote component
 // built 7/1/21
 
-const idGenerator = () => {
-  const randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-  const uniqid = randLetter + Date.now();
-  console.log(`Generating ID: ${uniqid}`);
-  return uniqid;
-};
-
 const NewNote = (props) => {
+
+  //function to clear notes for dev purposes
+  const clearNotes = () => {
+    window.localStorage.clear();
+    props.setNotes([]);
+  }
+
   //Take the form values and set them using the setNotes state setter
   const onSubmit = (e) => {
     //Use preventDefault to stop event from replacing the notes that are already there?
@@ -48,11 +49,14 @@ const NewNote = (props) => {
             noteTitle: newNotes[i].noteTitle,
             noteDate: newNotes[i].noteDate,
             noteContent: newNotes[i].noteContent,
+            noteId: newNotes[i].noteId
           })
         );
-      }
-    }
+      };
+    };
   };
+
+  
 
   // const [noteTitle, setNoteTitle] = useState();
 
@@ -89,6 +93,7 @@ const NewNote = (props) => {
 
         <button type="submit">Submit Note</button>
       </form>
+      <button type="button" onClick={clearNotes}>Clear Notes</button>
     </div>
   );
 };

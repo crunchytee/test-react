@@ -1,24 +1,31 @@
-//NOT IN USE CURRENTLY 7/7/21
+function loadNotes() {
 
-function loadNotes(notes, setNotes) {
-  var keys = Object.keys(localStorage),
-    i = keys.length;
+    //keyList so I know what keys to look for
+    let keyList = [];
+    let i, pushNote = [];
 
-  while (i--) {
-    //Get and store the values of the note by name
-    const note = localStorage.getItem(keys[i]);
-    const noteTitle = note.noteTitle;
-    const noteDate = note.noteDate;
-    const noteContent = note.noteContent;
-    const noteId = note.noteId;
+    //populate the keyList and update the i variable to be used in the while loop
+    for (var key in localStorage) {
+      keyList.push(key);
 
-    //Take the values and turn them into another variable
-    //that contains the existing notes & the new note submitted
-    const newNotes = [...notes, { noteTitle, noteDate, noteContent, noteId }];
+      //This is super hairy to use the -6 thing. For some reason keyList includes the setter / getter objects. To be sorted out later
+      i = keyList.length - 6;
+    }
 
-    //use the notes setter to update the notes
-    setNotes(newNotes);
+    while (i--) {
+      //Get and store the values of the note by name
+      const curNote = JSON.parse(localStorage.getItem(keyList[i]));
+      const noteTitle = curNote.noteTitle;
+      const noteDate = curNote.noteDate;
+      const noteContent = curNote.noteContent;
+      const noteId = curNote.noteId;
+
+      //Take the values and push them to the pushNote variable
+      pushNote.push({ noteTitle, noteDate, noteContent, noteId });
+    }
+    
+    return pushNote;
+    
   }
-}
 
 export default loadNotes;
