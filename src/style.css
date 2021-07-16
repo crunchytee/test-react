@@ -5,7 +5,7 @@ body {
 
 #header {
     text-align: center;
-    background-color: #FDEFAD;
+    background: linear-gradient(#CCFFFF, #FFCCCC);
     overflow: hidden;
 }
 
@@ -35,7 +35,7 @@ a {
 
 .newNote {
     text-align: center;
-    background-color: #FDEFAD;
+    background: linear-gradient(#FFCCCC, #CCFFFF);
     overflow: hidden;
 }
 

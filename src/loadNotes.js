@@ -1,4 +1,4 @@
-function loadNotes() {
+function loadNotes(notes) {
 
     //keyList so I know what keys to look for
     let keyList = [];
@@ -8,7 +8,7 @@ function loadNotes() {
     for (var key in localStorage) {
       keyList.push(key);
 
-      //This is super hairy to use the -6 thing. For some reason keyList includes the setter / getter objects. To be sorted out later
+      //This is super hairy to use the - 6 thing. For some reason keyList includes the setter / getter objects. To be sorted out later
       i = keyList.length - 6;
     }
 
@@ -19,9 +19,18 @@ function loadNotes() {
       const noteDate = curNote.noteDate;
       const noteContent = curNote.noteContent;
       const noteId = curNote.noteId;
+      const note1 = {
+        "noteTitle": noteTitle,
+        "noteDate": noteDate,
+        "noteContent": noteContent,
+        "noteId": noteId,
+      }
 
       //Take the values and push them to the pushNote variable
-      pushNote.push({ noteTitle, noteDate, noteContent, noteId });
+      pushNote = {
+        ...notes,
+        noteId: {note1},
+      };
     }
     
     return pushNote;

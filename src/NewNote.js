@@ -9,7 +9,7 @@ const NewNote = (props) => {
   //function to clear notes for dev purposes
   const clearNotes = () => {
     window.localStorage.clear();
-    props.setNotes([]);
+    props.setNotes({});
   }
 
   //Take the form values and set them using the setNotes state setter
@@ -22,13 +22,19 @@ const NewNote = (props) => {
     const noteDate = e.target.noteDate.value;
     const noteContent = e.target.noteContent.value;
     const noteId = idGenerator();
+    const curNote = {
+      "noteTitle": noteTitle,
+      "noteDate": noteDate,
+      "noteContent": noteContent,
+      "noteId": noteId
+    }
 
     //Take the values and turn them into another variable
     //that contains the existing notes & the new note submitted
-    const newNotes = [
+    const newNotes = {
       ...props.notes,
-      { noteTitle, noteDate, noteContent, noteId },
-    ];
+      noteId: {curNote},
+    };
 
     //use the notes setter to update the notes
     props.setNotes(newNotes);
@@ -92,8 +98,9 @@ const NewNote = (props) => {
         />
 
         <button type="submit">Submit Note</button>
+        <button type="button" onClick={clearNotes}>Clear Notes</button>
       </form>
-      <button type="button" onClick={clearNotes}>Clear Notes</button>
+      
     </div>
   );
 };
