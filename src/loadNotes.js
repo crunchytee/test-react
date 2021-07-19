@@ -2,7 +2,8 @@ function loadNotes(notes) {
 
     //keyList so I know what keys to look for
     let keyList = [];
-    let i, pushNote = [];
+    let i = [];
+    let pushNote = {};
 
     //populate the keyList and update the i variable to be used in the while loop
     for (var key in localStorage) {
@@ -10,6 +11,7 @@ function loadNotes(notes) {
 
       //This is super hairy to use the - 6 thing. For some reason keyList includes the setter / getter objects. To be sorted out later
       i = keyList.length - 6;
+      console.log("keylist length =" + i)
     }
 
     while (i--) {
@@ -23,17 +25,25 @@ function loadNotes(notes) {
         "noteTitle": noteTitle,
         "noteDate": noteDate,
         "noteContent": noteContent,
-        "noteId": noteId,
+        "noteId": noteId
       }
 
       //Take the values and push them to the pushNote variable
       pushNote = {
-        ...notes,
         [noteId]: note1,
+        ...pushNote
       };
     }
-    
-    return pushNote;
+
+    //sort keys 
+    const ordered = Object.keys(pushNote).sort().reverse().reduce(
+      (obj, key) => { 
+        obj[key] = pushNote[key]; 
+        return obj;
+      }, 
+      {}
+    );
+    return ordered;
     
   }
 

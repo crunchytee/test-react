@@ -34,23 +34,13 @@ const App = () => {
       {
         //Map over the notes and render each of them
       }
-
-      {/* {Object.keys(notes).map((note, i) => (
-        <div className="note" key={i}>
-          <h1 className="noteTitle">{note.noteTitle}</h1>
-          <h3 className="noteDate">{note.noteDate}</h3>
-          <div className="noteContent">{note.noteContent}</div>
-          <div className="noteContent">{note.noteId}</div>
-        </div>
-        )
-      )}  */}
       
       {Object.keys(notes).map((note, i) => (
         <div className="note" key={i}>
-          <h1 className="noteTitle">{note.noteTitle}</h1>
-          <h3 className="noteDate">{note.noteDate}</h3>
-          <div className="noteContent">{note.noteContent}</div>
-          <div className="noteContent">{note.noteId}</div>
+          <h1 className="noteTitle">{notes[note].noteTitle}</h1>
+          <h3 className="noteDate">{notes[note].noteDate}</h3>
+          <div className="noteContent">{notes[note].noteContent}</div>
+          <div className="noteContent">{notes[note].noteId}</div>
         </div>
         )
       )} 

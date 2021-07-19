@@ -36,8 +36,18 @@ const NewNote = (props) => {
       [noteId]: curNote,
     };
 
+    //sort keys 
+    const ordered = Object.keys(newNotes).sort().reverse().reduce(
+      (obj, key) => { 
+        obj[key] = newNotes[key]; 
+        return obj;
+      }, 
+      {}
+    );
+    
+
     //use the notes setter to update the notes
-    props.setNotes(newNotes);
+    props.setNotes(ordered);
     
 
     //For each note, check to see if it exists in localStorage. If not, then add it to localStorage
