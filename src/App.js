@@ -14,6 +14,7 @@ const App = () => {
     const notesToLoad = loadNotes(notes);
     setNotes(notesToLoad);
   }, []);
+  console.log(Object.keys(notes))
 
   //Return statement: includes SimpleHeader and Notes
   return (
@@ -28,6 +29,7 @@ const App = () => {
         //Render NewNote && pass the notes state and setter function to NewNote
       }
       <NewNote className="newNote" notes={notes} setNotes={setNotes} />
+      {console.log("notes outside of NewNote" + JSON.stringify(notes))}
 
       {
         //Map over the notes and render each of them
@@ -42,7 +44,7 @@ const App = () => {
         </div>
         )
       )}  */}
-
+      
       {Object.keys(notes).map((note, i) => (
         <div className="note" key={i}>
           <h1 className="noteTitle">{note.noteTitle}</h1>

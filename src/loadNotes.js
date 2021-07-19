@@ -29,7 +29,7 @@ function loadNotes(notes) {
       //Take the values and push them to the pushNote variable
       pushNote = {
         ...notes,
-        noteId: {note1},
+        [noteId]: note1,
       };
     }
     

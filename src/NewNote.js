@@ -33,32 +33,25 @@ const NewNote = (props) => {
     //that contains the existing notes & the new note submitted
     const newNotes = {
       ...props.notes,
-      noteId: {curNote},
+      [noteId]: curNote,
     };
 
     //use the notes setter to update the notes
     props.setNotes(newNotes);
+    
 
     //For each note, check to see if it exists in localStorage. If not, then add it to localStorage
     //Does this even need to happen? I guess it might when I go to update a note? But really we do want to update it
-    for (let i = 0; i < newNotes.length; i++) {
-      if (localStorage.getItem(newNotes[i].noteId) == newNotes[i].noteId) {
-        console.log(
-          `Item ${newNotes[i].noteId} not stored, already exists in localStorage`
-        );
-      } else {
-        // set key / value pairs into localStorage using noteID.property : noteProperty syntax
-
-        localStorage.setItem(
-          newNotes[i].noteId,
-          JSON.stringify({
-            noteTitle: newNotes[i].noteTitle,
-            noteDate: newNotes[i].noteDate,
-            noteContent: newNotes[i].noteContent,
-            noteId: newNotes[i].noteId
-          })
-        );
-      };
+    for (let i = 0; i < Object.keys(newNotes).length; i++) {
+      localStorage.setItem(
+        newNotes[noteId].noteId,
+        JSON.stringify({
+          noteTitle: newNotes[noteId].noteTitle,
+          noteDate: newNotes[noteId].noteDate,
+          noteContent: newNotes[noteId].noteContent,
+          noteId: newNotes[noteId].noteId
+        })
+      );
     };
   };
 
