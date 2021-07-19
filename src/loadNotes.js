@@ -45,6 +45,6 @@ function loadNotes(notes) {
     );
     return ordered;
     
-  }
+    }
 
 export default loadNotes;
