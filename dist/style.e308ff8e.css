@@ -1,0 +1,64 @@
+body {
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+    text-align: center;
+    background: linear-gradient(#CCFFFF, #FFCCCC);
+    overflow: hidden;
+}
+
+a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 1px 5px;
+    text-decoration: none;
+    font-size: 17px;   
+    margin: 1%;
+    border-style: solid;
+    
+}
+
+.note {
+    border-radius: 20px;
+    width: 20%;
+    height: 400px;
+    margin: .5em;
+    background: linear-gradient(35deg, #CCFFFF, #FFCCCC);
+    float: left;
+    display: block;
+
+}
+
+.newNote {
+    text-align: center;
+    background: linear-gradient(#FFCCCC, #CCFFFF);
+    overflow: hidden;
+}
+
+label {
+    display: block;
+}
+
+input {
+    display: block;
+    width: 40%;
+    margin: auto;
+}
+
+.noteTitle {
+    text-align: center;
+}
+
+.noteDate {
+    text-align: center;
+}
+
+.noteContent {
+    padding: 5%;
+}
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */

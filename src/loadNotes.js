@@ -11,7 +11,7 @@ function loadNotes(notes) {
 
       //This is super hairy to use the - 6 thing. For some reason keyList includes the setter / getter objects. To be sorted out later
       i = keyList.length - 6;
-      console.log("keylist length =" + i)
+      // console.log("keylist length =" + i)
     }
 
     while (i--) {
