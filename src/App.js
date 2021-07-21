@@ -12,7 +12,7 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   //modal jazz, for testing
-  const openModal  = (props) => {
+  const openModal  = (e) => {
     setIsOpen(true);
   }
 
@@ -25,7 +25,7 @@ const App = () => {
     const notesToLoad = loadNotes(notes);
     setNotes(notesToLoad);
   }, []);
-  // console.log(Object.keys(notes))  
+  // console.log(Object.keys(notes))
 
   //Return statement: includes SimpleHeader and Notes
   return (
@@ -33,7 +33,7 @@ const App = () => {
       <SimpleHeader
         title="Simple To-Do List"
         subtitle="Written by Tosh Roberts Brockway"
-        lists={["Milky Way", "ASTROtoken", "Mily Way Marketplace", "Log In"]}
+        lists={["Milky Way", "Log In"]}
       />
       {/* <button onClick={openModal}>Open Modal</button> */}
 
@@ -44,24 +44,21 @@ const App = () => {
       {/* {console.log("notes outside of NewNote" + JSON.stringify(notes))} */}
 
       {
-        //EditNote Component, takes the clicked on note and opens a Modal to edit the information of the Note
-      }
-
-      <EditNote isOpen={isOpen} setIsOpen={setIsOpen} ariaHideApp={false} onRequestClose={closeModal} notes={notes} />
-
-      {
         //Map over the notes and render each of them
       }
-      
-      {Object.keys(notes).map((note, i) => (
-        <div className="note" key={i} onClick={openModal}>
-          <h1 className="noteTitle">{notes[note].noteTitle}</h1>
-          <h3 className="noteDate">{notes[note].noteDate}</h3>
-          <div className="noteContent">{notes[note].noteContent}</div>
-          <div className="noteContent">{notes[note].noteId}</div>
+
+      {Object.values(notes).map((note, i) => (
+        <div key={i}>
+          <EditNote isOpen={isOpen} setNotes={setNotes} setIsOpen={setIsOpen} ariaHideApp={false} onRequestClose={closeModal} note={note} notes={notes} noteId={note.noteId} closeModal={closeModal}/>
+          <div className="note" onClick={openModal}>
+            <h1 className="noteTitle">{note.noteTitle}</h1>
+            <h3 className="noteDate">{note.noteDate}</h3>
+            <div className="noteContent">{note.noteContent}</div>
+            <div className="noteContent">{note.noteId}</div>
+          </div>
         </div>
         )
-      )} 
+      )}
     </div>
   );
 };

@@ -32685,27 +32685,98 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var EditNote = function EditNote(props) {
-  var initialNoteTitle = props.noteTitle;
-  var noteDate = props.noteDate;
-  var noteContent = props.noteContent;
-  var noteID = props.noteID; //TODO: use modal
-  //modal jazz, for testing
+  //Task: use destructuring to get all the values
+  var initialNoteTitle = props.note.noteTitle;
+  var noteDate = props.note.noteDate;
+  var noteContent = props.note.noteContent;
+  var noteId = props.note.noteId;
+  console.log("modal noteId is " + noteId);
 
-  var openModal = function openModal() {
-    props.setIsOpen(true);
+  var onSubmit = function onSubmit(e) {
+    //Use preventDefault to stop event from replacing the notes that are already there?
+    e.preventDefault(); //Get and store the values of the form by name
+
+    var newNoteTitle = e.target.noteTitle.value;
+    var newNoteDate = e.target.noteDate.value;
+    var newNoteContent = e.target.noteContent.value;
+    var newNoteId = noteId;
+    var curNote = {
+      "noteTitle": newNoteTitle,
+      "noteDate": newNoteDate,
+      "noteContent": newNoteContent,
+      "noteId": newNoteId //Take the values and turn them into another variable
+      //that contains the existing notes & the new note submitted
+
+    };
+
+    var newNotes = _objectSpread(_objectSpread({}, props.notes), {}, _defineProperty({}, noteId, curNote)); //sort keys 
+
+
+    var ordered = Object.keys(newNotes).sort().reverse().reduce(function (obj, key) {
+      obj[key] = newNotes[key];
+      return obj;
+    }, {}); //use the notes setter to update the notes
+
+    props.setNotes(ordered); //For each note, check to see if it exists in localStorage. If not, then add it to localStorage
+    //Does this even need to happen? I guess it might when I go to update a note? But really we do want to update it
+
+    for (var i = 0; i < Object.keys(newNotes).length; i++) {
+      localStorage.setItem(newNotes[noteId].noteId, JSON.stringify({
+        noteTitle: newNotes[noteId].noteTitle,
+        noteDate: newNotes[noteId].noteDate,
+        noteContent: newNotes[noteId].noteContent,
+        noteId: newNotes[noteId].noteId
+      }));
+    }
+
+    ;
   };
 
-  var closeModal = function closeModal() {
-    props.setIsOpen(false);
-  };
-
-  return _react.default.createElement("div", null, _react.default.createElement(_reactModal.default, {
+  return _react.default.createElement("div", {
+    key: props.noteId
+  }, _react.default.createElement(_reactModal.default, {
+    key: props.noteId,
     isOpen: props.isOpen,
     setIsOpen: props.setIsOpen,
     ariaHideApp: false,
-    onRequestClose: closeModal
-  }));
+    onRequestClose: props.closeModal
+  }, _react.default.createElement("div", {
+    className: "newNote",
+    onSubmit: onSubmit
+  }, _react.default.createElement("form", null, _react.default.createElement("label", {
+    htmlFor: "noteTitle"
+  }, "Note Title"), _react.default.createElement("input", {
+    type: "text",
+    id: "noteTitle",
+    name: "noteTitle",
+    defaultValue: initialNoteTitle,
+    required: true
+  }), _react.default.createElement("label", {
+    htmlFor: "noteDate"
+  }, "Note Date"), _react.default.createElement("input", {
+    type: "date",
+    id: "noteDate",
+    name: "noteDate",
+    defaultValue: noteDate,
+    required: true
+  }), _react.default.createElement("label", {
+    htmlFor: "noteContent"
+  }, "Note Content"), _react.default.createElement("input", {
+    type: "text",
+    id: "noteContent",
+    name: "noteContent",
+    defaultValue: noteContent,
+    required: true
+  }), _react.default.createElement("button", {
+    type: "submit"
+  }, "Submit Note")))));
 };
 
 var _default = EditNote;
@@ -32811,7 +32882,7 @@ var App = function App() {
       setIsOpen = _useState4[1]; //modal jazz, for testing
 
 
-  var openModal = function openModal(props) {
+  var openModal = function openModal(e) {
     setIsOpen(true);
   };
 
@@ -32823,37 +32894,42 @@ var App = function App() {
   (0, _react.useEffect)(function () {
     var notesToLoad = (0, _loadNotes.default)(notes);
     setNotes(notesToLoad);
-  }, []); // console.log(Object.keys(notes))  
+  }, []); // console.log(Object.keys(notes))
   //Return statement: includes SimpleHeader and Notes
 
   return _react.default.createElement("div", null, _react.default.createElement(_SimpleHeader.default, {
     title: "Simple To-Do List",
     subtitle: "Written by Tosh Roberts Brockway",
-    lists: ["Milky Way", "ASTROtoken", "Mily Way Marketplace", "Log In"]
+    lists: ["Milky Way", "Log In"]
   }), _react.default.createElement(_NewNote.default, {
     className: "newNote",
     notes: notes,
     setNotes: setNotes
-  }), _react.default.createElement(_EditNote.default, {
-    isOpen: isOpen,
-    setIsOpen: setIsOpen,
-    ariaHideApp: false,
-    onRequestClose: closeModal,
-    notes: notes
-  }), Object.keys(notes).map(function (note, i) {
+  }), Object.values(notes).map(function (note, i) {
     return _react.default.createElement("div", {
+      key: i
+    }, _react.default.createElement(_EditNote.default, {
+      isOpen: isOpen,
+      setNotes: setNotes,
+      setIsOpen: setIsOpen,
+      ariaHideApp: false,
+      onRequestClose: closeModal,
+      note: note,
+      notes: notes,
+      noteId: note.noteId,
+      closeModal: closeModal
+    }), _react.default.createElement("div", {
       className: "note",
-      key: i,
       onClick: openModal
     }, _react.default.createElement("h1", {
       className: "noteTitle"
-    }, notes[note].noteTitle), _react.default.createElement("h3", {
+    }, note.noteTitle), _react.default.createElement("h3", {
       className: "noteDate"
-    }, notes[note].noteDate), _react.default.createElement("div", {
+    }, note.noteDate), _react.default.createElement("div", {
       className: "noteContent"
-    }, notes[note].noteContent), _react.default.createElement("div", {
+    }, note.noteContent), _react.default.createElement("div", {
       className: "noteContent"
-    }, notes[note].noteId));
+    }, note.noteId)));
   }));
 };
 
@@ -32886,7 +32962,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53324" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51722" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

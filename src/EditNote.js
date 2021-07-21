@@ -3,35 +3,78 @@ import NewNote from "./NewNote";
 import ReactModal from 'react-modal';
 
 const EditNote = (props) => {
-  const initialNoteTitle = props.noteTitle;
-  const noteDate = props.noteDate;
-  const noteContent = props.noteContent;
-  const noteID = props.noteID;
 
-  //TODO: use modal
-  //modal jazz, for testing
-  const openModal  = () => {
-    props.setIsOpen(true);
-  }
+  //Task: use destructuring to get all the values
+  const initialNoteTitle = props.note.noteTitle;
+  const noteDate = props.note.noteDate;
+  const noteContent = props.note.noteContent;
+  const noteId = props.note.noteId;
+  console.log("modal noteId is " + noteId)
 
-  const closeModal = () => {
-    props.setIsOpen(false);
-  }
+  const onSubmit = (e) => {
+    //Use preventDefault to stop event from replacing the notes that are already there?
+    e.preventDefault();
+
+    //Get and store the values of the form by name
+    const newNoteTitle = e.target.noteTitle.value;
+    const newNoteDate = e.target.noteDate.value;
+    const newNoteContent = e.target.noteContent.value;
+    const newNoteId = noteId;
+    const curNote = {
+      "noteTitle": newNoteTitle,
+      "noteDate": newNoteDate,
+      "noteContent": newNoteContent,
+      "noteId": newNoteId
+    }
+
+    //Take the values and turn them into another variable
+    //that contains the existing notes & the new note submitted
+    const newNotes = {
+      ...props.notes,
+      [noteId]: curNote,
+    };
+
+    //sort keys 
+    const ordered = Object.keys(newNotes).sort().reverse().reduce(
+      (obj, key) => { 
+        obj[key] = newNotes[key]; 
+        return obj;
+      }, 
+      {}
+    );
+    
+
+    //use the notes setter to update the notes
+    props.setNotes(ordered);
+    
+
+    //For each note, check to see if it exists in localStorage. If not, then add it to localStorage
+    //Does this even need to happen? I guess it might when I go to update a note? But really we do want to update it
+    for (let i = 0; i < Object.keys(newNotes).length; i++) {
+      localStorage.setItem(
+        newNotes[noteId].noteId,
+        JSON.stringify({
+          noteTitle: newNotes[noteId].noteTitle,
+          noteDate: newNotes[noteId].noteDate,
+          noteContent: newNotes[noteId].noteContent,
+          noteId: newNotes[noteId].noteId
+        })
+      );
+    };
+  };
 
   return (
-    <div>
-      <ReactModal isOpen={props.isOpen} setIsOpen={props.setIsOpen} ariaHideApp={false} onRequestClose={closeModal}>
-        {/* <div className="newNote">
+    <div key={props.noteId}>
+      <ReactModal key={props.noteId} isOpen={props.isOpen} setIsOpen={props.setIsOpen} ariaHideApp={false} onRequestClose={props.closeModal}>
+        <div className="newNote" onSubmit={onSubmit}>
           <form>
             <label htmlFor="noteTitle">Note Title</label>
             <input
               type="text"
               id="noteTitle"
               name="noteTitle"
-              value={initialNoteTitle}
               defaultValue={initialNoteTitle}
               required
-              onChange={(e) => setNoteTitle(e.target.value)}
             />
 
             <label htmlFor="noteDate">Note Date</label>
@@ -39,7 +82,7 @@ const EditNote = (props) => {
               type="date"
               id="noteDate"
               name="noteDate"
-              value={props.noteDate}
+              defaultValue={noteDate}
               required
             />
 
@@ -48,13 +91,13 @@ const EditNote = (props) => {
               type="text"
               id="noteContent"
               name="noteContent"
-              value={props.noteContent}
+              defaultValue={noteContent}
               required
             />
 
             <button type="submit">Submit Note</button>
           </form>
-        </div> */}
+        </div>
       </ReactModal>
     </div>
   );
