@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import EditNote from "./src/EditNote";
+import EditNote from "./EditNote";
 
 const Note = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,6 @@ const Note = (props) => {
     const closeModal = () => {
         setIsOpen(false);
     };
-    console.log("note = " + props.note);
 
     return (
         <div key={props.i}>

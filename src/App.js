@@ -5,7 +5,7 @@ import NewNote from "./NewNote";
 import EditNote from "./EditNote";
 import loadNotes from "./loadNotes";
 import ReactModal from "react-modal";
-import Note from "../Note";
+import Note from "./Note";
 
 const App = () => {
   //State used to store notes

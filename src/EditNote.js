@@ -9,13 +9,10 @@ const EditNote = (props) => {
   const noteDate = props.note.noteDate;
   const noteContent = props.note.noteContent;
   const noteId = props.note.noteId;
-  console.log("modal noteId is " + noteId)
 
   const onSubmit = (e) => {
     //Use preventDefault to stop event from replacing the notes that are already there?
     e.preventDefault();
-
-    props.closeModal;
 
     //Get and store the values of the form by name
     const newNoteTitle = e.target.noteTitle.value;
@@ -45,6 +42,7 @@ const EditNote = (props) => {
       {}
     );
     
+    props.closeModal();
 
     //use the notes setter to update the notes
     props.setNotes(ordered);

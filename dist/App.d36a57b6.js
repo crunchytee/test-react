@@ -32697,12 +32697,10 @@ var EditNote = function EditNote(props) {
   var noteDate = props.note.noteDate;
   var noteContent = props.note.noteContent;
   var noteId = props.note.noteId;
-  console.log("modal noteId is " + noteId);
 
   var onSubmit = function onSubmit(e) {
     //Use preventDefault to stop event from replacing the notes that are already there?
-    e.preventDefault();
-    props.closeModal; //Get and store the values of the form by name
+    e.preventDefault(); //Get and store the values of the form by name
 
     var newNoteTitle = e.target.noteTitle.value;
     var newNoteDate = e.target.noteDate.value;
@@ -32723,7 +32721,8 @@ var EditNote = function EditNote(props) {
     var ordered = Object.keys(newNotes).sort().reverse().reduce(function (obj, key) {
       obj[key] = newNotes[key];
       return obj;
-    }, {}); //use the notes setter to update the notes
+    }, {});
+    props.closeModal(); //use the notes setter to update the notes
 
     props.setNotes(ordered); //For each note, check to see if it exists in localStorage. If not, then add it to localStorage
     //Does this even need to happen? I guess it might when I go to update a note? But really we do want to update it
@@ -32835,7 +32834,7 @@ function loadNotes(notes) {
 
 var _default = loadNotes;
 exports.default = _default;
-},{}],"../Note.js":[function(require,module,exports) {
+},{}],"Note.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32845,7 +32844,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _EditNote = _interopRequireDefault(require("./src/EditNote"));
+var _EditNote = _interopRequireDefault(require("./EditNote"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32880,7 +32879,6 @@ var Note = function Note(props) {
     setIsOpen(false);
   };
 
-  console.log("note = " + props.note);
   return _react.default.createElement("div", {
     key: props.i
   }, _react.default.createElement(_EditNote.default, {
@@ -32907,7 +32905,7 @@ var Note = function Note(props) {
 
 var _default = Note;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./src/EditNote":"EditNote.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./EditNote":"EditNote.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -32924,7 +32922,7 @@ var _loadNotes = _interopRequireDefault(require("./loadNotes"));
 
 var _reactModal = _interopRequireDefault(require("react-modal"));
 
-var _Note = _interopRequireDefault(require("../Note"));
+var _Note = _interopRequireDefault(require("./Note"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32981,7 +32979,7 @@ var App = function App() {
 };
 
 (0, _reactDom.render)(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SimpleHeader":"SimpleHeader.js","./NewNote":"NewNote.js","./EditNote":"EditNote.js","./loadNotes":"loadNotes.js","react-modal":"../node_modules/react-modal/lib/index.js","../Note":"../Note.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SimpleHeader":"SimpleHeader.js","./NewNote":"NewNote.js","./EditNote":"EditNote.js","./loadNotes":"loadNotes.js","react-modal":"../node_modules/react-modal/lib/index.js","./Note":"Note.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33009,7 +33007,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52782" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53040" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
