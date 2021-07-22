@@ -15,6 +15,8 @@ const EditNote = (props) => {
     //Use preventDefault to stop event from replacing the notes that are already there?
     e.preventDefault();
 
+    props.closeModal;
+
     //Get and store the values of the form by name
     const newNoteTitle = e.target.noteTitle.value;
     const newNoteDate = e.target.noteDate.value;
@@ -64,8 +66,8 @@ const EditNote = (props) => {
   };
 
   return (
-    <div key={props.noteId}>
-      <ReactModal key={props.noteId} isOpen={props.isOpen} setIsOpen={props.setIsOpen} ariaHideApp={false} onRequestClose={props.closeModal}>
+    <div key={props.note.noteId}>
+      <ReactModal key={props.note.noteId} isOpen={props.isOpen} setIsOpen={props.setIsOpen} ariaHideApp={false} onRequestClose={props.closeModal}>
         <div className="newNote" onSubmit={onSubmit}>
           <form>
             <label htmlFor="noteTitle">Note Title</label>

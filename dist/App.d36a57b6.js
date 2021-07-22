@@ -32701,7 +32701,8 @@ var EditNote = function EditNote(props) {
 
   var onSubmit = function onSubmit(e) {
     //Use preventDefault to stop event from replacing the notes that are already there?
-    e.preventDefault(); //Get and store the values of the form by name
+    e.preventDefault();
+    props.closeModal; //Get and store the values of the form by name
 
     var newNoteTitle = e.target.noteTitle.value;
     var newNoteDate = e.target.noteDate.value;
@@ -32740,9 +32741,9 @@ var EditNote = function EditNote(props) {
   };
 
   return _react.default.createElement("div", {
-    key: props.noteId
+    key: props.note.noteId
   }, _react.default.createElement(_reactModal.default, {
-    key: props.noteId,
+    key: props.note.noteId,
     isOpen: props.isOpen,
     setIsOpen: props.setIsOpen,
     ariaHideApp: false,
@@ -32834,7 +32835,79 @@ function loadNotes(notes) {
 
 var _default = loadNotes;
 exports.default = _default;
-},{}],"App.js":[function(require,module,exports) {
+},{}],"../Note.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _EditNote = _interopRequireDefault(require("./src/EditNote"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var Note = function Note(props) {
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isOpen = _useState2[0],
+      setIsOpen = _useState2[1]; //modal jazz
+
+
+  var openModal = function openModal(e) {
+    setIsOpen(true);
+  };
+
+  var closeModal = function closeModal() {
+    setIsOpen(false);
+  };
+
+  console.log("note = " + props.note);
+  return _react.default.createElement("div", {
+    key: props.i
+  }, _react.default.createElement(_EditNote.default, {
+    isOpen: isOpen,
+    setNotes: props.setNotes,
+    setIsOpen: setIsOpen,
+    onRequestClose: closeModal,
+    note: props.note,
+    notes: props.notes,
+    closeModal: closeModal
+  }), _react.default.createElement("div", {
+    className: "note",
+    onClick: openModal
+  }, _react.default.createElement("h1", {
+    className: "noteTitle"
+  }, props.noteTitle), _react.default.createElement("h3", {
+    className: "noteDate"
+  }, props.noteDate), _react.default.createElement("div", {
+    className: "noteContent"
+  }, props.noteContent), _react.default.createElement("div", {
+    className: "noteContent"
+  }, props.noteId)));
+};
+
+var _default = Note;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./src/EditNote":"EditNote.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -32850,6 +32923,8 @@ var _EditNote = _interopRequireDefault(require("./EditNote"));
 var _loadNotes = _interopRequireDefault(require("./loadNotes"));
 
 var _reactModal = _interopRequireDefault(require("react-modal"));
+
+var _Note = _interopRequireDefault(require("../Note"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32874,21 +32949,7 @@ var App = function App() {
   var _useState = (0, _react.useState)({}),
       _useState2 = _slicedToArray(_useState, 2),
       notes = _useState2[0],
-      setNotes = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      isOpen = _useState4[0],
-      setIsOpen = _useState4[1]; //modal jazz, for testing
-
-
-  var openModal = function openModal(e) {
-    setIsOpen(true);
-  };
-
-  var closeModal = function closeModal() {
-    setIsOpen(false);
-  }; //LoadNotes when they're ready using useEffect
+      setNotes = _useState2[1]; //LoadNotes when they're ready using useEffect
 
 
   (0, _react.useEffect)(function () {
@@ -32905,36 +32966,22 @@ var App = function App() {
     className: "newNote",
     notes: notes,
     setNotes: setNotes
-  }), Object.values(notes).map(function (note, i) {
-    return _react.default.createElement("div", {
-      key: i
-    }, _react.default.createElement(_EditNote.default, {
-      isOpen: isOpen,
-      setNotes: setNotes,
-      setIsOpen: setIsOpen,
-      ariaHideApp: false,
-      onRequestClose: closeModal,
+  }), Object.values(notes).map(function (note) {
+    return _react.default.createElement(_Note.default, {
+      key: note.noteId,
+      noteTitle: note.noteTitle,
+      noteDate: note.noteDate,
+      noteContent: note.noteContent,
+      noteId: note.noteId,
       note: note,
       notes: notes,
-      noteId: note.noteId,
-      closeModal: closeModal
-    }), _react.default.createElement("div", {
-      className: "note",
-      onClick: openModal
-    }, _react.default.createElement("h1", {
-      className: "noteTitle"
-    }, note.noteTitle), _react.default.createElement("h3", {
-      className: "noteDate"
-    }, note.noteDate), _react.default.createElement("div", {
-      className: "noteContent"
-    }, note.noteContent), _react.default.createElement("div", {
-      className: "noteContent"
-    }, note.noteId)));
+      setNotes: setNotes
+    });
   }));
 };
 
 (0, _reactDom.render)(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SimpleHeader":"SimpleHeader.js","./NewNote":"NewNote.js","./EditNote":"EditNote.js","./loadNotes":"loadNotes.js","react-modal":"../node_modules/react-modal/lib/index.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SimpleHeader":"SimpleHeader.js","./NewNote":"NewNote.js","./EditNote":"EditNote.js","./loadNotes":"loadNotes.js","react-modal":"../node_modules/react-modal/lib/index.js","../Note":"../Note.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -32962,7 +33009,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51722" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52782" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
