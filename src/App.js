@@ -36,6 +36,7 @@ const App = () => {
 
       {
         //Map over the notes and render each of them
+        //This could use some work. I don't need to input about half of those props...
       }
 
       {Object.values(notes).map((note) => (

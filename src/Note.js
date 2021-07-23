@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import DeleteNote from "./DeleteNote";
 import EditNote from "./EditNote";
 
 const Note = (props) => {
@@ -15,6 +16,19 @@ const Note = (props) => {
 
     return (
         <div key={props.i}>
+          <div className="note" >
+            <div onClick={openModal}>
+            <h1 className="noteTitle">{props.noteTitle}</h1>
+            <h3 className="noteDate">{props.noteDate}</h3>
+            <div className="noteContent">{props.noteContent}</div>
+            <div className="noteContent">{props.noteId}</div>
+            </div>
+            <DeleteNote
+              note={props.note}
+              setNotes={props.setNotes}
+              notes={props.notes}
+            />
+          </div>
           <EditNote 
             isOpen={isOpen} 
             setNotes={props.setNotes} 
@@ -24,12 +38,6 @@ const Note = (props) => {
             notes={props.notes} 
             closeModal={closeModal}
           />
-          <div className="note" onClick={openModal}>
-            <h1 className="noteTitle">{props.noteTitle}</h1>
-            <h3 className="noteDate">{props.noteDate}</h3>
-            <div className="noteContent">{props.noteContent}</div>
-            <div className="noteContent">{props.noteId}</div>
-          </div>
         </div>
     );
 };
