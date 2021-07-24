@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NewNote from "./NewNote";
 import ReactModal from 'react-modal';
+import DeleteNote from "./DeleteNote";
 
 const EditNote = (props) => {
 
@@ -97,6 +98,11 @@ const EditNote = (props) => {
 
             <button type="submit">Submit Note</button>
           </form>
+          <DeleteNote
+              note={props.note}
+              setNotes={props.setNotes}
+              notes={props.notes}
+            />
         </div>
       </ReactModal>
     </div>

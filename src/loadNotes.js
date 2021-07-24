@@ -33,6 +33,7 @@ function loadNotes(notes) {
         [noteId]: note1,
         ...pushNote
       };
+      console.log("loading notes...");
     }
 
     //sort keys 

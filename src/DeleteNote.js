@@ -16,8 +16,9 @@ const DeleteNote = (props) => {
     console.log("object = " + JSON.stringify(props.note));
     const delNote = () => {
         // delete props.note;
-        let notes = props.notes;
-        delete notes[props.note.noteId];
+        const notes = { ...props.notes};
+        let noteToDelete = props.note.noteId
+        delete notes[noteToDelete];
         props.setNotes(notes);
         closeModal();
     };

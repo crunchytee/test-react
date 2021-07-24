@@ -37,6 +37,7 @@ const Note = (props) => {
             note={props.note} 
             notes={props.notes} 
             closeModal={closeModal}
+            setNotes={props.setNotes}
           />
         </div>
     );
